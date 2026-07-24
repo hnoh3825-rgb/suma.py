@@ -1,22 +1,28 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUMA - طلبات الطعام</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+import streamlit as st
+
+# إعداد صفحة ستريمليت
+st.set_page_config(page_title="SUMA - طلبات الطعام", page_icon="🍔", layout="wide")
+
+# كود CSS وتنسيقات الموقع بالكامل
+st.markdown("""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
             font-family: 'Cairo', sans-serif;
         }
+
+        /* إخفاء عناصر ستريمليت الافتراضية للتحكم الكامل بالشكل */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
 
         body {
             background-color: #f8f9fa;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
 
         /* رأس الصفحة الأصفر */
@@ -56,9 +62,12 @@
             transform: translateX(-50%);
         }
 
-        .logo-container img {
-            height: 35px;
-            object-fit: contain;
+        .logo-container h1 {
+            color: #0044cc;
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-size: 24px;
+            margin: 0;
         }
 
         /* البانر الإعلاني الرئيسي */
@@ -75,7 +84,6 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            position: relative;
         }
 
         .banner-card img {
@@ -125,10 +133,6 @@
 
         .category-item:hover, .category-item.active {
             background-color: #f0f4ff;
-        }
-
-        .category-item i {
-            font-size: 12px;
         }
 
         /* قسم المنتجات وسط الصفحة */
@@ -228,141 +232,17 @@
             color: #888;
             font-size: 14px;
         }
-
-        /* النافذة المنسدلة لتفاصيل المنتج / الخيارات */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #fff;
-            width: 100%;
-            max-width: 600px;
-            border-radius: 16px;
-            overflow: hidden;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            animation: modalFadeIn 0.3s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            position: relative;
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .modal-body {
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0044cc;
-            margin-bottom: 8px;
-        }
-
-        .modal-desc {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .option-group {
-            margin-bottom: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .option-group-title {
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 15px;
-        }
-
-        .option-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .modal-footer {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .add-to-cart-btn {
-            background-color: #ccff00;
-            color: #000;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 15px;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .add-to-cart-btn:hover {
-            background-color: #b3e600;
-        }
     </style>
-</head>
-<body>
+""", unsafe_allow_html=True)
 
-    <!-- رأس الصفحة -->
+# رأس الصفحة والهيدر
+st.markdown("""
     <header class="header-top">
         <div class="header-left">
             <i class="fa-solid fa-cart-shopping" style="color: #0044cc; font-size: 18px;"></i>
         </div>
         <div class="logo-container">
-            <!-- استخدام اسم متطابق مع الشعار الموجود في تصميمك الخلفي -->
-            <h1 style="color: #0044cc; font-weight: 900; letter-spacing: 2px; font-size: 24px;">SUMA</h1>
+            <h1>SUMA</h1>
         </div>
         <div class="header-right">
             <div class="order-type-selector">
@@ -372,45 +252,46 @@
             <i class="fa-solid fa-bars" style="color: #0044cc; font-size: 18px;"></i>
         </div>
     </header>
+""", unsafe_allow_html=True)
 
-    <!-- البانر الرئيسي المطابق لصورة الباكجراوند -->
+# البانر الرئيسي باستخدام صورة الخلفية back.jpg
+st.markdown("""
     <section class="banner-section">
         <div class="banner-card">
-            <!-- استبدل الرابط أدناه بصورة الباكجراوند الفعليّة back.jpg المرفوعة -->
             <img src="back.jpg" alt="SUMA Banner">
         </div>
     </section>
+""", unsafe_allow_html=True)
 
-    <!-- المحتوى الرئيسي للقائمة -->
-    <main class="main-container">
-        
-        <!-- سلة الطلبات (تظهر يسار في الشاشات الكبيرة) -->
-        <aside class="cart-sidebar">
-            <div class="cart-icon-box">
-                <i class="fa-solid fa-bag-shopping"></i>
-            </div>
+# هيكل الصفحة الثلاثي الأعمدة
+col_cart, col_products, col_categories = st.columns([1, 2, 1], gap="medium")
+
+with col_cart:
+    st.markdown("""
+        <div class="cart-sidebar">
+            <div class="cart-icon-box">🛒</div>
             <p class="cart-text">أضف أصناف من القائمة</p>
-        </aside>
+        </div>
+    """, unsafe_allow_html=True)
 
-        <!-- قائمة المنتجات (المنتصف) -->
-        <section class="products-section" id="products-container">
+with col_products:
+    st.markdown("""
+        <div class="products-section">
             <h2 class="section-title">برجر</h2>
             
-            <!-- منتج 1: الوكانهوما برجر -->
-            <div class="product-card" onclick="openProductModal('الوكانهوما برجر', 'جرب اللذيذة مع شريحتين من لحم الأنجاس المخبوزة مع صوص الجمل وشرائح من جبنة تشيدر الأمريكية و...', '28.00', '1090 سعرة حرارية', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500')">
+            <div class="product-card">
                 <div class="product-info">
                     <h3 class="product-name">الوكانهوما برجر</h3>
-                    <p class="product-desc">جرب اللذيذة مع شريحتين من لحم الأنجاس المخبوزة مع صوص الجمل وشرائح من جبنة تشيدر الأمريكية و...</p>
+                    <p class="product-desc">جرب اللذيذة مع شريحتين من لحم الأنجاس المخبوزة مع صوص الجمل وشرائح من جبنة تشيدر الأمريكية...</p>
                     <div class="product-meta">
                         <span>1090 سعرة حرارية</span>
                         <span class="product-price">28.00 ر.س</span>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="برجر" class="product-img">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" class="product-img" alt="برجر">
             </div>
 
-            <!-- منتج إضافي تجريبي للبرجر -->
-            <div class="product-card" onclick="openProductModal('كلاسيك برجر', 'شريحة لحم بقر غني مع الخس الطازج والطماطم وصوص سوما الخاص والجبن.', '24.00', '850 سعرة حرارية', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
+            <div class="product-card">
                 <div class="product-info">
                     <h3 class="product-name">كلاسيك برجر</h3>
                     <p class="product-desc">شريحة لحم بقر غني مع الخس الطازج والطماطم وصوص سوما الخاص والجبن.</p>
@@ -419,96 +300,29 @@
                         <span class="product-price">24.00 ر.س</span>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" alt="برجر" class="product-img">
-            </div>
-        </section>
-
-        <!-- التصنيفات الجانبية (يمين) -->
-        <aside class="categories-sidebar">
-            <div class="category-item active" onclick="filterCategory('برجر', this)">
-                <span>برجر</span>
-                <i class="fa-solid fa-chevron-left"></i>
-            </div>
-            <div class="category-item" onclick="filterCategory('أطباق جانبية', this)">
-                <span>أطباق جانبية</span>
-                <i class="fa-solid fa-chevron-left"></i>
-            </div>
-            <div class="category-item" onclick="filterCategory('صوصات', this)">
-                <span>صوصات</span>
-                <i class="fa-solid fa-chevron-left"></i>
-            </div>
-            <div class="category-item" onclick="filterCategory('مشروبات', this)">
-                <span>مشروبات</span>
-                <i class="fa-solid fa-chevron-left"></i>
-            </div>
-        </aside>
-
-    </main>
-
-    <!-- نافذة تخصيص الطلب المنبثقة -->
-    <div class="modal-overlay" id="productModal">
-        <div class="modal-content">
-            <div style="position: relative;">
-                <img id="modalImg" src="" alt="" class="modal-header-img">
-                <button class="modal-close-btn" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body">
-                <h3 class="modal-title" id="modalTitle">عنوان المنتج</h3>
-                <p class="modal-desc" id="modalDesc">وصف تفصيلي للمنتج يظهر هنا...</p>
-                
-                <div class="option-group">
-                    <div class="option-group-title">
-                        <span>اختر الإضافات المفضلة</span>
-                        <span style="font-size: 12px; color: #888;">اختياري</span>
-                    </div>
-                    <label class="option-label">
-                        <span>جبن إضافي</span>
-                        <input type="checkbox">
-                    </label>
-                    <label class="option-label">
-                        <span>صوص سوما إضافي</span>
-                        <input type="checkbox">
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="add-to-cart-btn" onclick="closeProductModal()">إضافة إلى السلة</button>
+                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" class="product-img" alt="برجر">
             </div>
         </div>
-    </div>
+    """, unsafe_allow_html=True)
 
-    <script>
-        // دالة فتح نافذة المنتج
-        function openProductModal(title, desc, price, calories, imgUrl) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = desc + " (" + calories + ")";
-            document.getElementById('modalImg').src = imgUrl;
-            document.getElementById('productModal').style.display = 'flex';
-        }
-
-        // دالة إغلاق النافذة
-        function closeProductModal() {
-            document.getElementById('productModal').style.display = 'none';
-        }
-
-        // محاكاة التنقل بين التصنيفات
-        function filterCategory(categoryName, element) {
-            document.querySelectorAll('.categories-sidebar .category-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            element.classList.add('active');
-            document.querySelector('.products-section .section-title').innerText = categoryName;
-            
-            // يمكن تحديث المنتجات هنا حسب التصنيف المختار
-        }
-
-        // إغلاق النافذة عند النقر خارج المحتوى
-        window.onclick = function(event) {
-            let modal = document.getElementById('productModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
-</body>
-</html>
+with col_categories:
+    st.markdown("""
+        <div class="categories-sidebar">
+            <div class="category-item active">
+                <span>برجر</span>
+                <span>‹</span>
+            </div>
+            <div class="category-item">
+                <span>أطباق جانبية</span>
+                <span>‹</span>
+            </div>
+            <div class="category-item">
+                <span>صوصات</span>
+                <span>‹</span>
+            </div>
+            <div class="category-item">
+                <span>مشروبات</span>
+                <span>‹</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)

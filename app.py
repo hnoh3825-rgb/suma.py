@@ -1,262 +1,514 @@
-import streamlit as st
-
-# إعدادات الصفحة لتكون متجاوبة وبتصميم فاخر
-st.set_page_config(
-    page_title="سوما | SUMA",
-    page_icon="🍔",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
-
-# تنسيقات الهوية والألوان الداكنة المستوحاة من الموقع الأصلي
-st.markdown(
-    """
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUMA - طلبات الطعام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    .stApp {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    .restaurant-header {
-        text-align: center;
-        padding: 20px;
-        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-        border-radius: 20px;
-        margin-bottom: 25px;
-        border: 1px solid #333;
-    }
-    .logo-img {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #e53e3e;
-        margin-bottom: 10px;
-    }
-    .stButton>button {
-        width: 100%;
-        background-color: #e53e3e;
-        color: white;
-        border-radius: 12px;
-        font-weight: bold;
-        border: none;
-        padding: 10px;
-    }
-    .stButton>button:hover {
-        background-color: #c53030;
-        color: white;
-    }
-    .food-card {
-        background: #1e1e1e;
-        padding: 15px;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        margin-bottom: 15px;
-        border: 1px solid #2d2d2d;
-    }
-    .badge {
-        background-color: #2d1515;
-        color: #ff6b6b;
-        padding: 4px 10px;
-        border-radius: 8px;
-        font-size: 11px;
-        font-weight: bold;
-        display: inline-block;
-        margin-bottom: 5px;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* رأس الصفحة الأصفر */
+        .header-top {
+            background-color: #ccff00;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .order-type-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0044cc;
+        }
+
+        .order-type-selector span:first-child {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo-container img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        /* البانر الإعلاني الرئيسي */
+        .banner-section {
+            background-color: #ccff00;
+            padding: 0 30px 30px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .banner-card {
+            width: 100%;
+            max-width: 1100px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .banner-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* تخطيط المحتوى الرئيسي */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr 320px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* القائمة الجانبية للتصنيفات (يمين) */
+        .categories-sidebar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            height: fit-content;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #0044cc;
+            transition: background 0.2s;
+        }
+
+        .category-item:hover, .category-item.active {
+            background-color: #f0f4ff;
+        }
+
+        .category-item i {
+            font-size: 12px;
+        }
+
+        /* قسم المنتجات وسط الصفحة */
+        .products-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0044cc;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ccff00;
+            padding-bottom: 5px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .product-info {
+            flex: 1;
+            padding-left: 15px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0044cc;
+            margin-bottom: 5px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: #0044cc;
+        }
+
+        .product-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        /* سلة الطلبات (يسار) */
+        .cart-sidebar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 200px;
+            justify-content: center;
+            border: 1px dashed #ddd;
+        }
+
+        .cart-icon-box {
+            font-size: 32px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .cart-text {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* النافذة المنسدلة لتفاصيل المنتج / الخيارات */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0044cc;
+            margin-bottom: 8px;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .option-group {
+            margin-bottom: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .option-group-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-to-cart-btn {
+            background-color: #ccff00;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #b3e600;
+        }
     </style>
-""",
-    unsafe_allow_html=True,
-)
+</head>
+<body>
 
-# رأس التطبيق مع الشعار الحقيقي المأخوذ من سيرفر النظام
-logo_url = "https://media-files.tryordersystem.com/tenant/suma/settings/6a0e148871355.jpg"
-st.markdown(
-    f"""
-    <div class='restaurant-header'>
-        <img src='{logo_url}' class='logo-img'>
-        <h1 style='color: #ffffff; margin-bottom: 5px; font-size: 24px;'>سوما | SUMA</h1>
-        <p style='color: #a0aec0; font-size: 14px; margin: 0;'>طعم البرجر الأصلي في بريدة 🔥</p>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
+    <!-- رأس الصفحة -->
+    <header class="header-top">
+        <div class="header-left">
+            <i class="fa-solid fa-cart-shopping" style="color: #0044cc; font-size: 18px;"></i>
+        </div>
+        <div class="logo-container">
+            <!-- استخدام اسم متطابق مع الشعار الموجود في تصميمك الخلفي -->
+            <h1 style="color: #0044cc; font-weight: 900; letter-spacing: 2px; font-size: 24px;">SUMA</h1>
+        </div>
+        <div class="header-right">
+            <div class="order-type-selector">
+                <span>نوع الطلب</span>
+                <strong>حدد نوع الطلب</strong>
+            </div>
+            <i class="fa-solid fa-bars" style="color: #0044cc; font-size: 18px;"></i>
+        </div>
+    </header>
 
-# شريط معلومات سريعة
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown("⭐ **4.7** (158 تقييم)")
-with col2:
-    st.markdown("💵 **20–40 SAR**")
-with col3:
-    st.markdown("🟢 **متاح للطلب**")
+    <!-- البانر الرئيسي المطابق لصورة الباكجراوند -->
+    <section class="banner-section">
+        <div class="banner-card">
+            <!-- استبدل الرابط أدناه بصورة الباكجراوند الفعليّة back.jpg المرفوعة -->
+            <img src="back.jpg" alt="SUMA Banner">
+        </div>
+    </section>
 
-st.markdown("---")
+    <!-- المحتوى الرئيسي للقائمة -->
+    <main class="main-container">
+        
+        <!-- سلة الطلبات (تظهر يسار في الشاشات الكبيرة) -->
+        <aside class="cart-sidebar">
+            <div class="cart-icon-box">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+            <p class="cart-text">أضف أصناف من القائمة</p>
+        </aside>
 
-# القائمة الرسمية مع تصحيح صورة دبل سماش برجر لتكون الصورة الأخيرة التي أرسلتها، وإدراج جميع الصور التي أرسلتها
-menu_items = [
-    {
-        "name": "أوكلاهوما برجر",
-        "price": 28.00,
-        "calories": "1090 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس المشوية مع شرائح البصل وشريحتين من جبنة تشيدر الأمريكية.",
-        "img": "https://resizer.deliverect.com/nUhMkGHSDtAt4yfmX7g5CPIkFDmYmbXvb0N1Cv6AaCw/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvR2VtaW5pX0dlbmVyYXRlZF9JbWFnZV8xdWNiNnQxdWNiNnQxdWNiLTZhMGUwYmY3OWQ1NmJjMWFmODA0NTc5MS5wbmc=.jpg"
-    },
-    {
-        "name": "تريبل سماش برجر",
-        "price": 33.00,
-        "calories": "1250 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "خبز البريوش مع ثلاث شرائح من لحم البلاك أنجوس وثلاث شرائح من جبنة تشيدر الأمريكية وصوص سوما الخاص.",
-        "img": "https://resizer.deliverect.com/TXvqNQCQWx7phCBRxWXi4yBtBdT3czIXah5cfLfaPmM/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvRFNDMDgwNTUtNmEwZTBjMWE1YmM0M2FjY2RhYjk2ZTJhLmpwZWc=.jpg"
-    },
-    {
-        "name": "دبل سماش برجر",
-        "price": 27.00,
-        "calories": "1055 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس وشريحتين من جبنة تشيدر الأمريكية مع صوص سوما الخاص.",
-        "img": "https://resizer.deliverect.com/8vro1kOj2bqOtSsQR-nVsCQ7xNpQ0f28U7Yb7DqxiIM/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE1NzIzOTZfOWY0ZGY5MGMtY2ZmZC00NDUxLTk3ZGQtODBjMDZhMGUwMWY2LmpwZWc=.jpg"
-    },
-    {
-        "name": "بطاطس سوما",
-        "price": 18.00,
-        "calories": "735 سعرة حرارية",
-        "category": "المقبلات",
-        "desc": "بطاطس مقرمشة مع قطع لحم بلاك أنجوس ومزيج جبنة التشيدر الأمريكية مع صوص سوما والبصل المقرمش.",
-        "img": "https://resizer.deliverect.com/W9WJ8vnk1qqALXyLNrttO3DRMpLpwYG-xH94Q2LSdIw/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvJUQ4JUE4JUQ4JUI3JUQ4JUE3JUQ4JUI3JUQ4JUIzJTIwJUQ4JUI5JUQ4JUE3JUQ4JUFGJUQ5JThBLTZhMGRmYjhiNDYyNDJhMDA0NDBhZTM1NC5qcGc=.jpg"
-    },
-    {
-        "name": "وجبة سوما الخاصة (1)",
-        "price": 30.00,
-        "calories": "950 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "أحدث وأشهى إضافات القائمة لدينا من صوصات ووجبات سوما المميزة.",
-        "img": "https://resizer.deliverect.com/lvGJ205eA2RGsSqjPt_YmmFt7k3F7d3gzPY2yAjs5S4/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA3NThfOWY1N2I2YWUtMjVjOC00ZGFjLThlMGUtODViMzVkMDA5MWNiLmpwZw==.jpg"
-    },
-    {
-        "name": "وجبة سوما الخاصة (2)",
-        "price": 32.00,
-        "calories": "980 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "صنف إضافي مميز من قائمة طعام مطعم سوما الأصلية.",
-        "img": "https://resizer.deliverect.com/un8_t-OWsMYyka23y36N0my6JXlgOadJO2wHHq8Hbwg/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA2NTFfOWY1N2I2MGItNGE3MC00NjNkLTljN2MtZjRiNjdkZWM0NDBmLmpwZw==.jpg"
-    },
-    {
-        "name": "وجبة سوما الخاصة (3)",
-        "price": 34.00,
-        "calories": "1020 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "صنف إضافي فاخر من قائمة طعام مطعم سوما.",
-        "img": "https://resizer.deliverect.com/06_ZVDOorMBA2tkDpH3dDpHjIEvdgLgGP3SAr3tPW0s/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA3NDRfOWY1N2I2OTgtZWIwMi00YTFlLTg5YjAtNTQ4MWRjZWFmYzcyLmpwZw==.jpg"
-    },
-    {
-        "name": "وجبة سوما الخاصة (4)",
-        "price": 35.00,
-        "calories": "1050 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "إضافة جديدة مميزة من قائمة مطعم سوما الأصلية.",
-        "img": "https://resizer.deliverect.com/ghRZyTtvE1Dl4BIsm8ZCWimlukz_0juZIhqeI-Kg1cg/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA0NDlfOWY1N2I0ZDYtMjhmNi00NGVlLThlYTctNGQzYjBhYzFlMjYxLmpwZw==.jpg"
-    },
-    {
-        "name": "وجبة سوما الخاصة (5)",
-        "price": 36.00,
-        "calories": "1100 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "صنف إضافي أصلي من قائمة مطعم سوما.",
-        "img": "https://resizer.deliverect.com/8mZ_THjQkRSpoAwSKAxQkAaZa6f7ogokI_ChQ8Yoiqo/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NDg5NDMwOTNfOWYxMGMxMmUtMzE5ZC00NTY1LTkxODUtZmEwYTI1ODhlNDBlLmpwZw==.jpg"
-    }
-]
-
-# تصفية المنتجات حسب القسم
-categories = ["الكل", "البرجر", "المقبلات"]
-selected_category = st.selectbox("📂 تصنيفات القائمة:", categories)
-
-# تهيئة سلة المشتريات
-if "cart" not in st.session_state:
-    st.session_state.cart = []
-
-st.markdown("---")
-st.subheader("📋 قائمة الوجبات")
-
-# عرض الوجبات
-for item in menu_items:
-    if selected_category == "الكل" or item["category"] == selected_category:
-        with st.container():
-            st.markdown("<div class='food-card'>", unsafe_allow_html=True)
+        <!-- قائمة المنتجات (المنتصف) -->
+        <section class="products-section" id="products-container">
+            <h2 class="section-title">برجر</h2>
             
-            # عرض صورة الوجبة من السيرفر الأصلي
-            st.image(item["img"], use_container_width=True)
-            
-            st.markdown(
-                f"""
-                    <h3 style='margin-top: 10px; margin-bottom: 4px; color: #ffffff; font-size: 18px;'>{item['name']}</h3>
-                    <span class='badge'>{item['calories']}</span>
-                    <p style='color: #a0aec0; margin-top: 6px; font-size: 13px; line-height: 1.4;'>{item['desc']}</p>
-                    <p style='color: #ff6b6b; font-weight: bold; font-size: 16px; margin-bottom: 10px;'>{item['price']:.2f} SAR</p>
+            <!-- منتج 1: الوكانهوما برجر -->
+            <div class="product-card" onclick="openProductModal('الوكانهوما برجر', 'جرب اللذيذة مع شريحتين من لحم الأنجاس المخبوزة مع صوص الجمل وشرائح من جبنة تشيدر الأمريكية و...', '28.00', '1090 سعرة حرارية', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500')">
+                <div class="product-info">
+                    <h3 class="product-name">الوكانهوما برجر</h3>
+                    <p class="product-desc">جرب اللذيذة مع شريحتين من لحم الأنجاس المخبوزة مع صوص الجمل وشرائح من جبنة تشيدر الأمريكية و...</p>
+                    <div class="product-meta">
+                        <span>1090 سعرة حرارية</span>
+                        <span class="product-price">28.00 ر.س</span>
+                    </div>
                 </div>
-            """,
-                unsafe_allow_html=True,
-            )
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="برجر" class="product-img">
+            </div>
 
-            if st.button(f"إضافة للسلة 🛒 ({item['name']})", key=item["name"]):
-                st.session_state.cart.append(item)
-                st.success(f"تمت إضافة {item['name']} للسلة بنجاح!")
+            <!-- منتج إضافي تجريبي للبرجر -->
+            <div class="product-card" onclick="openProductModal('كلاسيك برجر', 'شريحة لحم بقر غني مع الخس الطازج والطماطم وصوص سوما الخاص والجبن.', '24.00', '850 سعرة حرارية', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
+                <div class="product-info">
+                    <h3 class="product-name">كلاسيك برجر</h3>
+                    <p class="product-desc">شريحة لحم بقر غني مع الخس الطازج والطماطم وصوص سوما الخاص والجبن.</p>
+                    <div class="product-meta">
+                        <span>850 سعرة حرارية</span>
+                        <span class="product-price">24.00 ر.س</span>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" alt="برجر" class="product-img">
+            </div>
+        </section>
 
-st.markdown("---")
+        <!-- التصنيفات الجانبية (يمين) -->
+        <aside class="categories-sidebar">
+            <div class="category-item active" onclick="filterCategory('برجر', this)">
+                <span>برجر</span>
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="category-item" onclick="filterCategory('أطباق جانبية', this)">
+                <span>أطباق جانبية</span>
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="category-item" onclick="filterCategory('صوصات', this)">
+                <span>صوصات</span>
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="category-item" onclick="filterCategory('مشروبات', this)">
+                <span>مشروبات</span>
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+        </aside>
 
-# قسم سلة الطلبات وإرسالها للواتساب
-st.subheader("🛒 سلة المشتريات")
+    </main>
 
-if len(st.session_state.cart) > 0:
-    total_price = 0
-    for cart_item in st.session_state.cart:
-        c1, c2 = st.columns([3, 1])
-        with c1:
-            st.write(f"• {cart_item['name']}")
-        with c2:
-            st.write(f"**{cart_item['price']:.2f} SAR**")
-        total_price += cart_item["price"]
+    <!-- نافذة تخصيص الطلب المنبثقة -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <div style="position: relative;">
+                <img id="modalImg" src="" alt="" class="modal-header-img">
+                <button class="modal-close-btn" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle">عنوان المنتج</h3>
+                <p class="modal-desc" id="modalDesc">وصف تفصيلي للمنتج يظهر هنا...</p>
+                
+                <div class="option-group">
+                    <div class="option-group-title">
+                        <span>اختر الإضافات المفضلة</span>
+                        <span style="font-size: 12px; color: #888;">اختياري</span>
+                    </div>
+                    <label class="option-label">
+                        <span>جبن إضافي</span>
+                        <input type="checkbox">
+                    </label>
+                    <label class="option-label">
+                        <span>صوص سوما إضافي</span>
+                        <input type="checkbox">
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="add-to-cart-btn" onclick="closeProductModal()">إضافة إلى السلة</button>
+            </div>
+        </div>
+    </div>
 
-    st.markdown(f"### المجموع الكلي: **{total_price:.2f} SAR**")
+    <script>
+        // دالة فتح نافذة المنتج
+        function openProductModal(title, desc, price, calories, imgUrl) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc + " (" + calories + ")";
+            document.getElementById('modalImg').src = imgUrl;
+            document.getElementById('productModal').style.display = 'flex';
+        }
 
-    whatsapp_text = "مرحباً، أود إرسال طلب من تطبيق سوما:%0a"
-    for ci in st.session_state.cart:
-        whatsapp_text += f"- {ci['name']} ({ci['price']:.2f} SAR)%0a"
-    whatsapp_text += f"المجموع الكلي: {total_price:.2f} SAR"
+        // دالة إغلاق النافذة
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
 
-    wa_url = f"https://wa.me/966556344884?text={whatsapp_text}"
+        // محاكاة التنقل بين التصنيفات
+        function filterCategory(categoryName, element) {
+            document.querySelectorAll('.categories-sidebar .category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+            document.querySelector('.products-section .section-title').innerText = categoryName;
+            
+            // يمكن تحديث المنتجات هنا حسب التصنيف المختار
+        }
 
-    col_w1, col_w2 = st.columns(2)
-    with col_w1:
-        if st.button("🗑️ تفريغ السلة"):
-            st.session_state.cart = []
-            st.rerun()
-    with col_w2:
-        st.markdown(
-            f"<a href='{wa_url}' target='_blank'><button style='width:100%; background-color:#25d366; color:white; border:none; padding:10px; border-radius:12px; font-weight:bold; text-align:center; cursor:pointer;'>إرسال للواتساب 📱</button></a>",
-            unsafe_allow_html=True,
-        )
-else:
-    st.info("السلة فارغة حالياً. اختر وجبتك المفضلة وأضفها للسلة.")
-
-st.markdown("---")
-
-# معلومات التواصل والعنوان
-st.subheader("📍 معلومات المطعم")
-st.markdown(
-    "<p style='color: #cbd5e0;'>**العنوان:** طريق الأمير عبد الله بن عبد العزيز بن مسعيد بن جلوي، حي النهضة، بريدة</p>",
-    unsafe_allow_html=True,
-)
-
-col_call, col_wa = st.columns(2)
-with col_call:
-    st.markdown(
-        "<a href='tel:0556344884'><button style='width:100%; background-color:#3182ce; color:white; border:none; padding:10px; border-radius:12px; font-weight:bold;'>📞 اتصال مباشر</button></a>",
-        unsafe_allow_html=True,
-    )
-with col_wa:
-    st.markdown(
-        "<a href='https://wa.me/966556344884' target='_blank'><button style='width:100%; background-color:#38a169; color:white; border:none; padding:10px; border-radius:12px; font-weight:bold;'>💬 واتساب</button></a>",
-        unsafe_allow_html=True,
-    )
+        // إغلاق النافذة عند النقر خارج المحتوى
+        window.onclick = function(event) {
+            let modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -24,6 +24,14 @@ st.markdown(
         margin-bottom: 25px;
         border: 1px solid #333;
     }
+    .logo-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #e53e3e;
+        margin-bottom: 10px;
+    }
     .stButton>button {
         width: 100%;
         background-color: #e53e3e;
@@ -60,11 +68,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# رأس التطبيق (الهوية الرسمية)
+# رأس التطبيق مع الشعار الحقيقي المأخوذ من سيرفر النظام
+logo_url = "https://media-files.tryordersystem.com/tenant/suma/settings/6a0e148871355.jpg"
 st.markdown(
-    """
+    f"""
     <div class='restaurant-header'>
-        <h1 style='color: #ffffff; margin-bottom: 5px;'>🍔 سوما | SUMA</h1>
+        <img src='{logo_url}' class='logo-img'>
+        <h1 style='color: #ffffff; margin-bottom: 5px; font-size: 24px;'>سوما | SUMA</h1>
         <p style='color: #a0aec0; font-size: 14px; margin: 0;'>طعم البرجر الأصلي في بريدة 🔥</p>
     </div>
 """,
@@ -82,7 +92,7 @@ with col3:
 
 st.markdown("---")
 
-# القائمة الرسمية للوجبات مع صور الموقع الأساسي
+# القائمة الرسمية مع الروابط الحقيقية التي أرسلتها
 menu_items = [
     {
         "name": "أوكلاهوما برجر",
@@ -90,7 +100,7 @@ menu_items = [
         "calories": "1090 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس المشوية مع شرائح البصل وشريحتين من جبنة تشيدر الأمريكية.",
-        "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop",
+        "img": "https://resizer.deliverect.com/nUhMkGHSDtAt4yfmX7g5CPIkFDmYmbXvb0N1Cv6AaCw/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvR2VtaW5pX0dlbmVyYXRlZF9JbWFnZV8xdWNiNnQxdWNiNnQxdWNiLTZhMGUwYmY3OWQ1NmJjMWFmODA0NTc5MS5wbmc=.jpg"
     },
     {
         "name": "تريبل سماش برجر",
@@ -98,7 +108,7 @@ menu_items = [
         "calories": "1250 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع ثلاث شرائح من لحم البلاك أنجوس وثلاث شرائح من جبنة تشيدر الأمريكية وصوص سوما الخاص.",
-        "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=600&auto=format&fit=crop",
+        "img": "https://resizer.deliverect.com/TXvqNQCQWx7phCBRxWXi4yBtBdT3czIXah5cfLfaPmM/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvRFNDMDgwNTUtNmEwZTBjMWE1YmM0M2FjY2RhYjk2ZTJhLmpwZWc=.jpg"
     },
     {
         "name": "دبل سماش برجر",
@@ -106,7 +116,7 @@ menu_items = [
         "calories": "1055 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس وشريحتين من جبنة تشيدر الأمريكية مع صوص سوما الخاص.",
-        "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop",
+        "img": "https://resizer.deliverect.com/JVSaAiznkt4Eq-_j2Q2PnwcrMkbnHL2MKqCzXs3PA6E/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvR2VtaW5pX0dlbmVyYXRlZF9JbWFnZV9waHVnNHVwaHVnNHVwaHVnLTZhMGUwOWEwMThkZGRkYTZiMWQzZThkOS5wbmc=.jpg"
     },
     {
         "name": "بطاطس سوما",
@@ -114,8 +124,16 @@ menu_items = [
         "calories": "735 سعرة حرارية",
         "category": "المقبلات",
         "desc": "بطاطس مقرمشة مع قطع لحم بلاك أنجوس ومزيج جبنة التشيدر الأمريكية مع صوص سوما والبصل المقرمش.",
-        "img": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=600&auto=format&fit=crop",
+        "img": "https://resizer.deliverect.com/W9WJ8vnk1qqALXyLNrttO3DRMpLpwYG-xH94Q2LSdIw/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvJUQ4JUE4JUQ4JUI3JUQ4JUE3JUQ4JUI3JUQ4JUIzJTIwJUQ4JUI5JUQ4JUE3JUQ4JUFGJUQ5JThBLTZhMGRmYjhiNDYyNDJhMDA0NDBhZTM1NC5qcGc=.jpg"
     },
+    {
+        "name": "منتج إضافي من القائمة",
+        "price": 15.00,
+        "calories": "500 سعرة حرارية",
+        "category": "المقبلات",
+        "desc": "وجبة جانبية أو صوص مميز خاص بمطعم سوما.",
+        "img": "https://resizer.deliverect.com/HLl0ct_DAhhrbtZz5ibJ-oRlIG8WYyoYAsLyYbGLMTM/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvJUQ4JUE4JUQ4JUI3JUQ4JUE3JUQ4JUI3JUQ4JUIzJTIwJUQ4JUIzJUQ5JTg4JUQ5JTg1JUQ4JUE3JTIwJUQ5JTgxJUQ4JUIxJUQ4JUE3JUQ5JThBJUQ4JUIyJTIwJUQ4JUFFJUQ5JTg0JUQ5JTgxJUQ5JThBJUQ4JUE5JTIwJUQ4JUE4JUQ5JThBJUQ4JUI2JUQ4JUE3JUQ4JUExLTZhMGRmYjhiNDYyNDJhMDA0NDBhZTM1My5qcGc=.jpg"
+    }
 ]
 
 # تصفية المنتجات حسب القسم
@@ -135,7 +153,7 @@ for item in menu_items:
         with st.container():
             st.markdown("<div class='food-card'>", unsafe_allow_html=True)
             
-            # عرض صورة الوجبة
+            # عرض صورة الوجبة من السيرفر الأصلي
             st.image(item["img"], use_container_width=True)
             
             st.markdown(

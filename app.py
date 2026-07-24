@@ -1,5 +1,4 @@
--=import streamlit as st
-
+import streamlit as st
 # إعدادات الصفحة لتكون ملائمة للجوال
 st.set_page_config(
     page_title="سوما برجر | Suma Burger",

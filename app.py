@@ -92,7 +92,7 @@ with col3:
 
 st.markdown("---")
 
-# القائمة الرسمية مع الروابط الحقيقية التي أرسلتها
+# القائمة الرسمية مع تصحيح صورة دبل سماش برجر لتكون الصورة الأخيرة التي أرسلتها، وإدراج جميع الصور التي أرسلتها
 menu_items = [
     {
         "name": "أوكلاهوما برجر",
@@ -116,7 +116,7 @@ menu_items = [
         "calories": "1055 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس وشريحتين من جبنة تشيدر الأمريكية مع صوص سوما الخاص.",
-        "img": "https://resizer.deliverect.com/JVSaAiznkt4Eq-_j2Q2PnwcrMkbnHL2MKqCzXs3PA6E/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvR2VtaW5pX0dlbmVyYXRlZF9JbWFnZV9waHVnNHVwaHVnNHVwaHVnLTZhMGUwOWEwMThkZGRkYTZiMWQzZThkOS5wbmc=.jpg"
+        "img": "https://resizer.deliverect.com/8vro1kOj2bqOtSsQR-nVsCQ7xNpQ0f28U7Yb7DqxiIM/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE1NzIzOTZfOWY0ZGY5MGMtY2ZmZC00NDUxLTk3ZGQtODBjMDZhMGUwMWY2LmpwZWc=.jpg"
     },
     {
         "name": "بطاطس سوما",
@@ -127,12 +127,44 @@ menu_items = [
         "img": "https://resizer.deliverect.com/W9WJ8vnk1qqALXyLNrttO3DRMpLpwYG-xH94Q2LSdIw/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvJUQ4JUE4JUQ4JUI3JUQ4JUE3JUQ4JUI3JUQ4JUIzJTIwJUQ4JUI5JUQ4JUE3JUQ4JUFGJUQ5JThBLTZhMGRmYjhiNDYyNDJhMDA0NDBhZTM1NC5qcGc=.jpg"
     },
     {
-        "name": "منتج إضافي من القائمة",
-        "price": 15.00,
-        "calories": "500 سعرة حرارية",
-        "category": "المقبلات",
-        "desc": "وجبة جانبية أو صوص مميز خاص بمطعم سوما.",
-        "img": "https://resizer.deliverect.com/HLl0ct_DAhhrbtZz5ibJ-oRlIG8WYyoYAsLyYbGLMTM/rt:fill/g:ce/el:0/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2lrb25hLWJ1Y2tldC1wcm9kdWN0aW9uL2ltYWdlcy82ODVjZTFlZTk2OGEzZWI5ODE0MDdkNjkvJUQ4JUE4JUQ4JUI3JUQ4JUE3JUQ4JUI3JUQ4JUIzJTIwJUQ4JUIzJUQ5JTg4JUQ5JTg1JUQ4JUE3JTIwJUQ5JTgxJUQ4JUIxJUQ4JUE3JUQ5JThBJUQ4JUIyJTIwJUQ4JUFFJUQ5JTg0JUQ5JTgxJUQ5JThBJUQ4JUE5JTIwJUQ4JUE4JUQ5JThBJUQ4JUI2JUQ4JUE3JUQ4JUExLTZhMGRmYjhiNDYyNDJhMDA0NDBhZTM1My5qcGc=.jpg"
+        "name": "وجبة سوما الخاصة (1)",
+        "price": 30.00,
+        "calories": "950 سعرة حرارية",
+        "category": "البرجر",
+        "desc": "أحدث وأشهى إضافات القائمة لدينا من صوصات ووجبات سوما المميزة.",
+        "img": "https://resizer.deliverect.com/lvGJ205eA2RGsSqjPt_YmmFt7k3F7d3gzPY2yAjs5S4/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA3NThfOWY1N2I2YWUtMjVjOC00ZGFjLThlMGUtODViMzVkMDA5MWNiLmpwZw==.jpg"
+    },
+    {
+        "name": "وجبة سوما الخاصة (2)",
+        "price": 32.00,
+        "calories": "980 سعرة حرارية",
+        "category": "البرجر",
+        "desc": "صنف إضافي مميز من قائمة طعام مطعم سوما الأصلية.",
+        "img": "https://resizer.deliverect.com/un8_t-OWsMYyka23y36N0my6JXlgOadJO2wHHq8Hbwg/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA2NTFfOWY1N2I2MGItNGE3MC00NjNkLTljN2MtZjRiNjdkZWM0NDBmLmpwZw==.jpg"
+    },
+    {
+        "name": "وجبة سوما الخاصة (3)",
+        "price": 34.00,
+        "calories": "1020 سعرة حرارية",
+        "category": "البرجر",
+        "desc": "صنف إضافي فاخر من قائمة طعام مطعم سوما.",
+        "img": "https://resizer.deliverect.com/06_ZVDOorMBA2tkDpH3dDpHjIEvdgLgGP3SAr3tPW0s/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA3NDRfOWY1N2I2OTgtZWIwMi00YTFlLTg5YjAtNTQ4MWRjZWFmYzcyLmpwZw==.jpg"
+    },
+    {
+        "name": "وجبة سوما الخاصة (4)",
+        "price": 35.00,
+        "calories": "1050 سعرة حرارية",
+        "category": "البرجر",
+        "desc": "إضافة جديدة مميزة من قائمة مطعم سوما الأصلية.",
+        "img": "https://resizer.deliverect.com/ghRZyTtvE1Dl4BIsm8ZCWimlukz_0juZIhqeI-Kg1cg/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NTE5OTA0NDlfOWY1N2I0ZDYtMjhmNi00NGVlLThlYTctNGQzYjBhYzFlMjYxLmpwZw==.jpg"
+    },
+    {
+        "name": "وجبة سوما الخاصة (5)",
+        "price": 36.00,
+        "calories": "1100 سعرة حرارية",
+        "category": "البرجر",
+        "desc": "صنف إضافي أصلي من قائمة مطعم سوما.",
+        "img": "https://resizer.deliverect.com/8mZ_THjQkRSpoAwSKAxQkAaZa6f7ogokI_ChQ8Yoiqo/rt:fill/g:ce/el:0/cb:ededc03f2f7a45d9b29970a490a648e5/aHR0cHM6Ly9mb29kaWNzLWNvbnNvbGUtcHJvZHVjdGlvbi5zMy5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9pbWFnZXMvMTE2OTAzXzE3NDg5NDMwOTNfOWYxMGMxMmUtMzE5ZC00NTY1LTkxODUtZmEwYTI1ODhlNDBlLmpwZw==.jpg"
     }
 ]
 

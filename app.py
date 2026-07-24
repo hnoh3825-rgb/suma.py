@@ -1,29 +1,20 @@
-import streamlit as st
-
-# إعداد صفحة ستريمليت
-st.set_page_config(page_title="SUMA - طلبات الطعام", page_icon="🍔", layout="wide")
-
-# كود CSS وتنسيقات الموقع بالكامل
-st.markdown("""
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUMA - طلبات الطعام</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Cairo', sans-serif;
         }
 
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-
-        /* إلغاء الحوامض الافتراضية لصفحات ستريمليت وتوسيع العرض بالكامل */
-        .block-container {
-            padding: 0 !important;
-            max-width: 100% !important;
-        }
-
-        body, .stApp {
+        body {
             background-color: #f8f9fa;
             color: #333;
         }
@@ -36,7 +27,6 @@ st.markdown("""
             justify-content: space-between;
             align-items: center;
             position: relative;
-            width: 100%;
         }
 
         .header-left, .header-right {
@@ -80,7 +70,6 @@ st.markdown("""
             padding: 0 30px 30px 30px;
             display: flex;
             justify-content: center;
-            width: 100%;
         }
 
         .banner-card {
@@ -106,7 +95,12 @@ st.markdown("""
             display: grid;
             grid-template-columns: 300px 1fr 320px;
             gap: 20px;
-            direction: rtl;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* القائمة الجانبية للتصنيفات (يمين) */
@@ -116,6 +110,13 @@ st.markdown("""
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             height: fit-content;
+            order: 3;
+        }
+
+        @media (min-width: 1025px) {
+            .categories-sidebar {
+                order: 1;
+            }
         }
 
         .category-item {
@@ -140,6 +141,7 @@ st.markdown("""
             display: flex;
             flex-direction: column;
             gap: 20px;
+            order: 2;
         }
 
         .section-title {
@@ -222,6 +224,7 @@ st.markdown("""
             min-height: 200px;
             justify-content: center;
             border: 1px dashed #ddd;
+            order: 3;
         }
 
         .cart-icon-box {
@@ -235,10 +238,10 @@ st.markdown("""
             font-size: 14px;
         }
     </style>
-""", unsafe_allow_html=True)
+</head>
+<body>
 
-# رأس الصفحة والهيدر
-st.markdown("""
+    <!-- رأس الصفحة -->
     <header class="header-top">
         <div class="header-left">
             <i class="fa-solid fa-cart-shopping" style="color: #0044cc; font-size: 18px;"></i>
@@ -254,28 +257,27 @@ st.markdown("""
             <i class="fa-solid fa-bars" style="color: #0044cc; font-size: 18px;"></i>
         </div>
     </header>
-""", unsafe_allow_html=True)
 
-# البانر الرئيسي باستخدام صورة الخلفية back.jpg
-st.markdown("""
+    <!-- البانر الرئيسي باستخدام صورة الخلفية back.jpg -->
     <section class="banner-section">
         <div class="banner-card">
             <img src="back.jpg" alt="SUMA Banner">
         </div>
     </section>
-""", unsafe_allow_html=True)
 
-# هيكل الصفحة المتطابق تماماً مع التصميم المطلوب (سلة يسار، منتجات وسط، تصنيفات يمين)
-st.markdown("""
-    <div class="main-container">
-        <!-- 1. سلة الطلبات (يسار) -->
-        <div class="cart-sidebar">
-            <div class="cart-icon-box">🛒</div>
+    <!-- المحتوى الرئيسي للقائمة -->
+    <main class="main-container">
+        
+        <!-- سلة الطلبات (يسار) -->
+        <aside class="cart-sidebar">
+            <div class="cart-icon-box">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
             <p class="cart-text">أضف أصناف من القائمة</p>
-        </div>
+        </aside>
 
-        <!-- 2. قسم المنتجات (المنتصف) -->
-        <div class="products-section">
+        <!-- قائمة المنتجات (المنتصف) -->
+        <section class="products-section">
             <h2 class="section-title">برجر</h2>
             
             <div class="product-card">
@@ -287,7 +289,7 @@ st.markdown("""
                         <span class="product-price">28.00 ر.س</span>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" class="product-img" alt="برجر">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" alt="برجر" class="product-img">
             </div>
 
             <div class="product-card">
@@ -299,28 +301,31 @@ st.markdown("""
                         <span class="product-price">24.00 ر.س</span>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" class="product-img" alt="برجر">
+                <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" alt="برجر" class="product-img">
             </div>
-        </div>
+        </section>
 
-        <!-- 3. التصنيفات الجانبية (يمين) -->
-        <div class="categories-sidebar">
+        <!-- التصنيفات الجانبية (يمين) -->
+        <aside class="categories-sidebar">
             <div class="category-item active">
                 <span>برجر</span>
-                <span>‹</span>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="category-item">
                 <span>أطباق جانبية</span>
-                <span>‹</span>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="category-item">
                 <span>صوصات</span>
-                <span>‹</span>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="category-item">
                 <span>مشروبات</span>
-                <span>‹</span>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
-        </div>
-    </div>
-""", unsafe_allow_html=True)
+        </aside>
+
+    </main>
+
+</body>
+</html>

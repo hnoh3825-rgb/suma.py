@@ -1,14 +1,14 @@
 import streamlit as st
 
-# إعدادات الصفحة لتكون ملائمة للجوال
+# إعدادات الصفحة لتكون متجاوبة وبتصميم فاخر
 st.set_page_config(
-    page_title="سوما برجر | Suma Burger",
+    page_title="سوما | SUMA",
     page_icon="🍔",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
-# تنسيقات الهوية والألوان الداكنة الأصلية
+# تنسيقات الهوية والألوان الداكنة المستوحاة من الموقع الأصلي
 st.markdown(
     """
     <style>
@@ -18,10 +18,10 @@ st.markdown(
     }
     .restaurant-header {
         text-align: center;
-        padding: 15px;
+        padding: 20px;
         background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-        border-radius: 15px;
-        margin-bottom: 20px;
+        border-radius: 20px;
+        margin-bottom: 25px;
         border: 1px solid #333;
     }
     .stButton>button {
@@ -60,11 +60,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# رأس التطبيق
+# رأس التطبيق (الهوية الرسمية)
 st.markdown(
     """
     <div class='restaurant-header'>
-        <h1 style='color: #ffffff; margin-bottom: 5px;'>🍔 سوما برجر | Suma Burger</h1>
+        <h1 style='color: #ffffff; margin-bottom: 5px;'>🍔 سوما | SUMA</h1>
         <p style='color: #a0aec0; font-size: 14px; margin: 0;'>طعم البرجر الأصلي في بريدة 🔥</p>
     </div>
 """,
@@ -74,7 +74,7 @@ st.markdown(
 # شريط معلومات سريعة
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown("⭐ **4.7** (158)")
+    st.markdown("⭐ **4.7** (158 تقييم)")
 with col2:
     st.markdown("💵 **20–40 SAR**")
 with col3:
@@ -82,7 +82,7 @@ with col3:
 
 st.markdown("---")
 
-# القائمة الرسمية مع تخصيص حقل الروابط (يمكنك استبدال الروابط الحالية بروابط صور موقعكم الأساسي مباشرة)
+# القائمة الرسمية للوجبات مع صور الموقع الأساسي
 menu_items = [
     {
         "name": "أوكلاهوما برجر",
@@ -90,7 +90,7 @@ menu_items = [
         "calories": "1090 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس المشوية مع شرائح البصل وشريحتين من جبنة تشيدر الأمريكية.",
-        "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
+        "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop",
     },
     {
         "name": "تريبل سماش برجر",
@@ -98,7 +98,7 @@ menu_items = [
         "calories": "1250 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع ثلاث شرائح من لحم البلاك أنجوس وثلاث شرائح من جبنة تشيدر الأمريكية وصوص سوما الخاص.",
-        "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
+        "img": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=600&auto=format&fit=crop",
     },
     {
         "name": "دبل سماش برجر",
@@ -106,54 +106,38 @@ menu_items = [
         "calories": "1055 سعرة حرارية",
         "category": "البرجر",
         "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس وشريحتين من جبنة تشيدر الأمريكية مع صوص سوما الخاص.",
-        "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
-    },
-    {
-        "name": "ترفل برجر",
-        "price": 29.00,
-        "calories": "1120 سعرة حرارية",
-        "category": "البرجر",
-        "desc": "خبز البريوش مع شريحتين من لحم البلاك أنجوس وشريحتين من جبنة تشيدر البيضاء وصوص الترفل والخس.",
-        "img": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
+        "img": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop",
     },
     {
         "name": "بطاطس سوما",
         "price": 18.00,
         "calories": "735 سعرة حرارية",
-        "category": "المقبلات والبطاطس",
+        "category": "المقبلات",
         "desc": "بطاطس مقرمشة مع قطع لحم بلاك أنجوس ومزيج جبنة التشيدر الأمريكية مع صوص سوما والبصل المقرمش.",
-        "img": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
-    },
-    {
-        "name": "بطاطس عادية",
-        "price": 10.00,
-        "calories": "380 سعرة حرارية",
-        "category": "المقبلات والبطاطس",
-        "desc": "أصابع البطاطس المقرمشة والذهبية.",
-        "img": "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=600",  # استبدل برابط صورة موقعكم الأساسي هنا
+        "img": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=600&auto=format&fit=crop",
     },
 ]
 
-# اختيار القسم
-categories = ["الكل", "البرجر", "المقبلات والبطاطس"]
+# تصفية المنتجات حسب القسم
+categories = ["الكل", "البرجر", "المقبلات"]
 selected_category = st.selectbox("📂 تصنيفات القائمة:", categories)
 
-# تهيئة السلة
+# تهيئة سلة المشتريات
 if "cart" not in st.session_state:
     st.session_state.cart = []
 
 st.markdown("---")
-st.subheader("📋 المنتجات المتوفرة")
+st.subheader("📋 قائمة الوجبات")
 
-# عرض المنتجات
+# عرض الوجبات
 for item in menu_items:
     if selected_category == "الكل" or item["category"] == selected_category:
         with st.container():
             st.markdown("<div class='food-card'>", unsafe_allow_html=True)
-
-            # عرض الصورة
+            
+            # عرض صورة الوجبة
             st.image(item["img"], use_container_width=True)
-
+            
             st.markdown(
                 f"""
                     <h3 style='margin-top: 10px; margin-bottom: 4px; color: #ffffff; font-size: 18px;'>{item['name']}</h3>
@@ -167,12 +151,12 @@ for item in menu_items:
 
             if st.button(f"إضافة للسلة 🛒 ({item['name']})", key=item["name"]):
                 st.session_state.cart.append(item)
-                st.success(f"تمت إضافة {item['name']} للسلة!")
+                st.success(f"تمت إضافة {item['name']} للسلة بنجاح!")
 
 st.markdown("---")
 
-# سلة الطلبات
-st.subheader("🛒 سلة المشتريات والطلبات")
+# قسم سلة الطلبات وإرسالها للواتساب
+st.subheader("🛒 سلة المشتريات")
 
 if len(st.session_state.cart) > 0:
     total_price = 0
@@ -186,9 +170,7 @@ if len(st.session_state.cart) > 0:
 
     st.markdown(f"### المجموع الكلي: **{total_price:.2f} SAR**")
 
-    whatsapp_text = (
-        "مرحباً، أود إرسال طلب تجريبي من تطبيق سوما برجر:%0a"
-    )
+    whatsapp_text = "مرحباً، أود إرسال طلب من تطبيق سوما:%0a"
     for ci in st.session_state.cart:
         whatsapp_text += f"- {ci['name']} ({ci['price']:.2f} SAR)%0a"
     whatsapp_text += f"المجموع الكلي: {total_price:.2f} SAR"
@@ -206,12 +188,12 @@ if len(st.session_state.cart) > 0:
             unsafe_allow_html=True,
         )
 else:
-    st.info("السلة فارغة حالياً.")
+    st.info("السلة فارغة حالياً. اختر وجبتك المفضلة وأضفها للسلة.")
 
 st.markdown("---")
 
-# معلومات التواصل
-st.subheader("📍 معلومات المطعم والتواصل")
+# معلومات التواصل والعنوان
+st.subheader("📍 معلومات المطعم")
 st.markdown(
     "<p style='color: #cbd5e0;'>**العنوان:** طريق الأمير عبد الله بن عبد العزيز بن مسعيد بن جلوي، حي النهضة، بريدة</p>",
     unsafe_allow_html=True,

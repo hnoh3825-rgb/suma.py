@@ -110,13 +110,6 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             height: fit-content;
-            order: 3;
-        }
-
-        @media (min-width: 1025px) {
-            .categories-sidebar {
-                order: 1;
-            }
         }
 
         .category-item {
@@ -141,7 +134,6 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            order: 2;
         }
 
         .section-title {
@@ -224,7 +216,6 @@
             min-height: 200px;
             justify-content: center;
             border: 1px dashed #ddd;
-            order: 3;
         }
 
         .cart-icon-box {
@@ -258,7 +249,7 @@
         </div>
     </header>
 
-    <!-- البانر الرئيسي باستخدام صورة الخلفية back.jpg -->
+    <!-- البانر الرئيسي باستخدام صورة الخلفية -->
     <section class="banner-section">
         <div class="banner-card">
             <img src="back.jpg" alt="SUMA Banner">

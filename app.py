@@ -13,16 +13,19 @@ st.markdown("""
             font-family: 'Cairo', sans-serif;
         }
 
-        /* إخفاء عناصر ستريمليت الافتراضية للتحكم الكامل بالشكل */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
 
-        body {
+        /* إلغاء الحوامض الافتراضية لصفحات ستريمليت وتوسيع العرض بالكامل */
+        .block-container {
+            padding: 0 !important;
+            max-width: 100% !important;
+        }
+
+        body, .stApp {
             background-color: #f8f9fa;
             color: #333;
-            margin: 0;
-            padding: 0;
         }
 
         /* رأس الصفحة الأصفر */
@@ -33,6 +36,7 @@ st.markdown("""
             justify-content: space-between;
             align-items: center;
             position: relative;
+            width: 100%;
         }
 
         .header-left, .header-right {
@@ -76,6 +80,7 @@ st.markdown("""
             padding: 0 30px 30px 30px;
             display: flex;
             justify-content: center;
+            width: 100%;
         }
 
         .banner-card {
@@ -101,12 +106,7 @@ st.markdown("""
             display: grid;
             grid-template-columns: 300px 1fr 320px;
             gap: 20px;
-        }
-
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
+            direction: rtl;
         }
 
         /* القائمة الجانبية للتصنيفات (يمين) */
@@ -149,6 +149,7 @@ st.markdown("""
             margin-bottom: 10px;
             border-bottom: 2px solid #ccff00;
             padding-bottom: 5px;
+            text-align: right;
         }
 
         .product-card {
@@ -161,6 +162,7 @@ st.markdown("""
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            text-align: right;
         }
 
         .product-card:hover {
@@ -263,19 +265,16 @@ st.markdown("""
     </section>
 """, unsafe_allow_html=True)
 
-# هيكل الصفحة الثلاثي الأعمدة
-col_cart, col_products, col_categories = st.columns([1, 2, 1], gap="medium")
-
-with col_cart:
-    st.markdown("""
+# هيكل الصفحة المتطابق تماماً مع التصميم المطلوب (سلة يسار، منتجات وسط، تصنيفات يمين)
+st.markdown("""
+    <div class="main-container">
+        <!-- 1. سلة الطلبات (يسار) -->
         <div class="cart-sidebar">
             <div class="cart-icon-box">🛒</div>
             <p class="cart-text">أضف أصناف من القائمة</p>
         </div>
-    """, unsafe_allow_html=True)
 
-with col_products:
-    st.markdown("""
+        <!-- 2. قسم المنتجات (المنتصف) -->
         <div class="products-section">
             <h2 class="section-title">برجر</h2>
             
@@ -303,10 +302,8 @@ with col_products:
                 <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" class="product-img" alt="برجر">
             </div>
         </div>
-    """, unsafe_allow_html=True)
 
-with col_categories:
-    st.markdown("""
+        <!-- 3. التصنيفات الجانبية (يمين) -->
         <div class="categories-sidebar">
             <div class="category-item active">
                 <span>برجر</span>
@@ -325,4 +322,5 @@ with col_categories:
                 <span>‹</span>
             </div>
         </div>
-    """, unsafe_allow_html=True)
+    </div>
+""", unsafe_allow_html=True)
